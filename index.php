@@ -22,7 +22,7 @@
             message = "Connection failed - Status Code: " + this.status.toString();
         }
         document.getElementById("stashtabdata").innerHTML = message;
-        document.getElementById("searchButton").setAttribute("disabled", false);
+        document.getElementById("searchButton").removeAttribute("disabled");
     }
     </script>
 </head>
