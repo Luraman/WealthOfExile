@@ -15,19 +15,16 @@ $changeid = "";
 for ($x = 0; $x <= 5; $x++) {
     $result = fetchstashes($changeid);
 
-    if ($result->next_change_id == $changeid) {
+    if ($result["next_change_id"] == $changeid) {
         echo "Nothing Found!";
         break;
     } else {
-        $changeid = $result->next_change_id;
+        $changeid = $result["next_change_id"];
     }
 
-/*    $currencystashes = array_filter($results->stashes, function ($stash) {
-        return $stash->stashType == "PremiumStash";
+    $currencystashes = array_filter($results["stashes"], function ($stash) {
+        return $stash["stashType"] == "PremiumStash";
     });
-*/
-
-    $currencystashes = $results->stashes;
 
     if (!empty($currencystashes)) {
         echo json_encode($currencystashes[0]);
