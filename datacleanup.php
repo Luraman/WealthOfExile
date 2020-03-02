@@ -2,7 +2,7 @@
 function countCurrencies($items) {
     return array_reduce($items
                       , function($result, $item) {
-                            if ($item->catagory == "currency") {
+                            if ($item->category == "currency") {
                                 if (!isset($result[$item->group])) {
                                     $result[$item->group] = array();
                                 }
