@@ -16,6 +16,7 @@ $result = fetchitems("Metamorph", "Luraman");
 
 $currencyGroups = countCurrencies($result);
 
+echo "<h2>Results:</h2><br>";
 foreach ($currencyGroups as $currencyGroup => $currencies) {
     echo "<h4>{$currencyGroup}s</h4>:<br><ul>";
     foreach ($currencies as $currencyName => $currencyCount) {
