@@ -22,8 +22,6 @@ for ($x = 0; $x <= 1; $x++) {
         $changeid = $result->next_change_id;
     }
 
-    echo json_encode(reset($result->stashes)) . "<br>";
-
     $currencystashes = array_filter($results->stashes, function ($stash) {
         return $stash->stashType == "PremiumStash";
     });
