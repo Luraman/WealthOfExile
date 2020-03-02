@@ -1,4 +1,6 @@
 <?php
+require "datacleanup.php";
+
 $url = "http://api.pathofexile.com/public-stash-tabs";
 
 function fetchstashes($changeid) {
@@ -26,9 +28,17 @@ for ($x = 0; $x <= 100; $x++) {
         return $stash->stashType == "CurrencyStash" && $stash->public == true;
     });
 
-    if (!empty($currencystashes)) {
-        echo json_encode(reset($currencystashes));
-        break;
+    if (empty($currencystashes)) {
+        continue;
     }
+
+    $firstStash = reset($currencystashes);
+    $currencies = countCurrencies($firstStash);
+
+    echo "Account name: $stach->accountName<br>";
+    foreach ($currencies as $currencyName => $currencyCount) {
+        echo "$currencyName: $currencyCount<br>";
+    }
+    break;
 }
 ?>
