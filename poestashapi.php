@@ -11,20 +11,23 @@ function fetchstashes($changeid) {
 }
 
 $changeid = 0;
-$result = fetchstashes($changeid);
+for ($x = 0; $x <= 100; $x++) {
+    $result = fetchstashes($changeid);
 
-if ($result->next_change_id = $changeid) {
-    echo "Nothing Found!";
-    die;
-}
+    if ($result->next_change_id == $changeid) {
+        echo "Nothing Found!";
+        break;
+    } else {
+        $changeid = $result->next_change_id;
+    }
 
-$currencystashes = array_filter($results->stashes, function ($stash) {
-    return $stash["stashType"] == "CurrencyStash";
-});
+    $currencystashes = array_filter($results->stashes, function ($stash) {
+        return $stash["stashType"] == "CurrencyStash";
+    });
 
-if (empty($currencystashes)) {
-    echo "Nothing Found!";
-} else {
-    echo $currencystashes[0];
+    if (!empty($currencystashes)) {
+        echo json_encode($currencystashes[0]);
+        break;
+    }
 }
 ?>
