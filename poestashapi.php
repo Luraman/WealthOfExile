@@ -2,6 +2,7 @@
 $url = "http://api.pathofexile.com/public-stash-tabs";
 
 function fetchstashes($changeid) {
+    echo "Fetching $changeid<br>";
     $client = curl_init($GLOBALS["url"] . "?id=:$changeid");
     curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
 
@@ -20,8 +21,6 @@ for ($x = 0; $x <= 100; $x++) {
     } else {
         $changeid = $result->next_change_id;
     }
-
-    echo "Checking $changeid<br>";
 
     $currencystashes = array_filter($results->stashes, function ($stash) {
         return $stash["stashType"] == "CurrencyStash";
