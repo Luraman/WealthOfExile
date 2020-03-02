@@ -14,7 +14,7 @@ function fetchstashes($changeid) {
 }
 
 $changeid = "";
-for ($x = 0; $x <= 100; $x++) {
+for ($x = 0; $x <= 10000; $x++) {
     $result = fetchstashes($changeid);
 
     if ($result->next_change_id == $changeid) {
