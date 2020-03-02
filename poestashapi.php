@@ -22,14 +22,14 @@ for ($x = 0; $x <= 1; $x++) {
         $changeid = $result->next_change_id;
     }
 
-    echo $result->stashes[0] . "<br>";
+    echo json_encode(reset($result->stashes)) . "<br>";
 
     $currencystashes = array_filter($results->stashes, function ($stash) {
         return $stash->stashType == "PremiumStash";
     });
 
     if (!empty($currencystashes)) {
-        echo json_encode($currencystashes[0]);
+        echo json_encode(reset($currencystashes));
         break;
     }
 }
