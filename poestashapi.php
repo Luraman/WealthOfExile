@@ -7,7 +7,7 @@ function fetchstashes($changeid) {
     curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
 
     $response = curl_exec($client);
-    $result = json_decode($response);
+    $result = json_decode($response, true);
     return $result;
 }
 
