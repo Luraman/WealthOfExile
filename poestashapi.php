@@ -22,7 +22,7 @@ for ($x = 0; $x <= 1; $x++) {
         $changeid = $result->next_change_id;
     }
 
-    $currencystashes = array_filter($results->stashes, function ($stash) {
+    $currencystashes = array_filter($result->stashes, function ($stash) {
         return $stash->stashType == "PremiumStash";
     });
 
