@@ -12,7 +12,7 @@ function fetchstashes($changeid) {
 }
 
 $changeid = "";
-for ($x = 0; $x <= 100; $x++) {
+for ($x = 0; $x <= 5; $x++) {
     $result = fetchstashes($changeid);
 
     if ($result->next_change_id == $changeid) {
@@ -23,8 +23,7 @@ for ($x = 0; $x <= 100; $x++) {
     }
 
     $currencystashes = array_filter($results->stashes, function ($stash) {
-        return true;
-        //        return $stash["stashType"] == "CurrencyStash";
+        return $stash->stashType == "CurrencyStash";
     });
 
     if (!empty($currencystashes)) {
