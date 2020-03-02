@@ -23,7 +23,7 @@ for ($x = 0; $x <= 5; $x++) {
     }
 
     $currencystashes = array_filter($results->stashes, function ($stash) {
-        return $stash->stashType == "CurrencyStash";
+        return $stash->stashType == "PremiumStash";
     });
 
     if (!empty($currencystashes)) {
