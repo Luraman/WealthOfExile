@@ -25,7 +25,7 @@ for ($x = 0; $x <= 100; $x++) {
     }
 
     $currencystashes = array_filter($result->stashes, function ($stash) {
-        return $stash->stashType == "CurrencyStash" && $stash->public == true;
+        return $stash->public == true && $stash->accountName == "Luraman" && $stash->stashType == "CurrencyStash";
     });
 
     if (empty($currencystashes)) {
@@ -35,7 +35,7 @@ for ($x = 0; $x <= 100; $x++) {
     $firstStash = reset($currencystashes);
     $currencies = countCurrencies($firstStash);
 
-    echo "Account name: $stach->accountName<br>";
+    echo "Account name: $stash->accountName<br>";
     foreach ($currencies as $currencyName => $currencyCount) {
         echo "$currencyName: $currencyCount<br>";
     }
