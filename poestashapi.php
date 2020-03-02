@@ -22,9 +22,12 @@ for ($x = 0; $x <= 5; $x++) {
         $changeid = $result->next_change_id;
     }
 
-    $currencystashes = array_filter($results->stashes, function ($stash) {
+/*    $currencystashes = array_filter($results->stashes, function ($stash) {
         return $stash->stashType == "PremiumStash";
     });
+*/
+
+    $currencystashes = $results->stashes;
 
     if (!empty($currencystashes)) {
         echo json_encode($currencystashes[0]);
