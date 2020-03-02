@@ -3,7 +3,7 @@ $url = "http://api.pathofexile.com/public-stash-tabs";
 
 function fetchstashes($changeid) {
     echo "Fetching $changeid<br>";
-    $client = curl_init($GLOBALS["url"] . "?id=:$changeid");
+    $client = curl_init($GLOBALS["url"] . "?id=$changeid");
     curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
 
     $response = curl_exec($client);
@@ -11,7 +11,7 @@ function fetchstashes($changeid) {
     return $result;
 }
 
-$changeid = 0;
+$changeid = "";
 for ($x = 0; $x <= 100; $x++) {
     $result = fetchstashes($changeid);
 
