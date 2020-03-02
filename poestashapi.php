@@ -1,11 +1,10 @@
 <?php
 require "datacleanup.php";
 
-$url = "http://api.pathofexile.com/public-stash-tabs";
+$url = "https://api.poe.watch/listings";
 
-function fetchstashes($changeid) {
-    echo "Fetching $changeid<br>";
-    $client = curl_init($GLOBALS["url"] . "?id=$changeid");
+function fetchitems($league, $account) {
+    $client = curl_init($GLOBALS["url"] . "?league=$league&account=$account");
     curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
 
     $response = curl_exec($client);
@@ -13,32 +12,15 @@ function fetchstashes($changeid) {
     return $result;
 }
 
-$changeid = "";
-for ($x = 0; $x <= 10000; $x++) {
-    $result = fetchstashes($changeid);
+$result = fetchitems("Metamorph", "Luraman");
 
-    if ($result->next_change_id == $changeid) {
-        echo "Nothing Found!";
-        break;
-    } else {
-        $changeid = $result->next_change_id;
-    }
+$currencyGroups = countCurrencies($result);
 
-    $currencystashes = array_filter($result->stashes, function ($stash) {
-        return $stash->public == true && $stash->accountName == "Luraman" && $stash->stashType == "CurrencyStash";
-    });
-
-    if (empty($currencystashes)) {
-        continue;
-    }
-
-    $firstStash = reset($currencystashes);
-    $currencies = countCurrencies($firstStash);
-
-    echo "Account name: $stash->accountName<br>";
+foreach ($currencyGroups as $currencyGroup => $currencies) {
+    echo "<h4>{$currencyGroup}s</h4>:<br><ul>";
     foreach ($currencies as $currencyName => $currencyCount) {
-        echo "$currencyName: $currencyCount<br>";
+        echo "<li>{$currencyName}: {$currencyCount}</li>";
     }
-    break;
+    echo "</ul>";
 }
 ?>

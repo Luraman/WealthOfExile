@@ -19,7 +19,7 @@
         if (this.readyState == 4 && this.status == 200) {
             message = this.responseText;
         } else {
-            message = "Connection failed - Status Code: " + this.status.toString();
+            message = `<p>Connection failed - Status Code: ${this.status.toString()} </p>`;
         }
         document.getElementById("stashtabdata").innerHTML = message;
         document.getElementById("searchButton").removeAttribute("disabled");
@@ -39,7 +39,7 @@
   <input type="button" value="Search" id="searchButton" name="searchButton" onclick=stashsearch()>
 </form> 
 <div id="stashtab">
-    <p><span id=stashtabdata>Click the button to start</span></p>
+    <span id=stashtabdata><p>Click the button to start</p></span>
 </div>
 </body>
 </html>
