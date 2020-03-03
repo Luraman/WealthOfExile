@@ -3,9 +3,10 @@ require "datacleanup.php";
 
 $url = "https://api.poe.watch";
 $league = "Metamorph";
+$exaltId = 142;
 
-function fetchitems($league, $account) {
-    $client = curl_init($GLOBALS["url"] . "/listings?league=$league&account=$account");
+function fetch($url) {
+    $client = curl_init($url);
     curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
 
     $response = curl_exec($client);
@@ -13,13 +14,16 @@ function fetchitems($league, $account) {
     return $result;
 }
 
-function fetchprices($league, $category) {
-    $client = curl_init($GLOBALS["url"] . "/get?league=$league&category=$category");
-    curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
+function fetchItems($league, $account) {
+    return fetch($GLOBALS["url"] . "/listings?league=$league&account=$account");
+}
 
-    $response = curl_exec($client);
-    $result = json_decode($response);
-    return $result;
+function fetchPrices($league, $category) {
+    return fetch($GLOBALS["url"] . "/get?league=$league&category=$category");
+}
+
+function fetchItemHistory($league, $itemId) {
+    return fetch($GLOBALS["url"] . "/itemhistory?league=$league&id=" . $GLOBALS["exaltId"]);
 }
 
 function grouptocategory($group) {
@@ -34,12 +38,16 @@ function grouptocategory($group) {
 
 $account = filter_var($_GET["account"], FILTER_SANITIZE_STRING);
 
-$currencyGroups = countCurrencies(fetchitems($league, $account));
+$currencyGroups = countCurrencies(fetchItems($league, $account));
 
 $prices = array();
 foreach (array("currency", "card", "map") as $category) {
-    $prices[$category] = buildPriceLookup(fetchprices($league, $category));
+    $prices[$category] = buildPriceLookup(fetchPrices($league, $category));
 }
+
+$exaltHistory = fetchItemHistory($league, $exaltId);
+$latestExaltEntry = end($exaltHistory);
+$exaltPrice = $latestExaltEntry->mean;
 
 $combinedPrice = 0.0;
 
@@ -54,6 +62,8 @@ foreach ($currencyGroups as $currencyGroup => $currencies) {
     }
     echo "</ul>";
 }
-$formattedCombinedPrice = number_format($combinedPrice,1);
-echo "<h2>{$account} has a networth of: {$formattedCombinedPrice}c</h2>"
+$formattedCombinedPriceInChaos = number_format($combinedPrice,1);
+$formattedCombinedPriceInExalts = number_format($combinedPrice / $exaltPrice,1);
+
+echo "<h2>{$account} has a networth of: {$formattedCombinedPriceInChaos}c or ${formattedCombinedPriceInExalts}ex</h2>";
 ?>
