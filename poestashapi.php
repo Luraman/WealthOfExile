@@ -47,7 +47,7 @@ echo "<h2>Results for {$account}:</h2>";
 foreach ($currencyGroups as $currencyGroup => $currencies) {
     echo "<h4>{$currencyGroup}:</h4><ul>";
     foreach ($currencies as $currencyName => $currencyCount) {
-        $price = $prices[grouptocategory($group)][$currencyName];
+        $price = $prices[grouptocategory($currencyGroup)][$currencyName];
         echo "<li>{$currencyName}: {$currencyCount} - {$price}c</li>";
     }
     echo "</ul>";
