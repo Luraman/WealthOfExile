@@ -3,7 +3,6 @@ require "datacleanup.php";
 
 $url = "https://api.poe.watch";
 $league = "Metamorph";
-$exaltId = 142;
 
 function fetch($url) {
     $client = curl_init($url);
@@ -20,10 +19,6 @@ function fetchItems($league, $account) {
 
 function fetchPrices($league, $category) {
     return fetch($GLOBALS["url"] . "/get?league=$league&category=$category");
-}
-
-function fetchItemHistory($league, $itemId) {
-    return fetch($GLOBALS["url"] . "/itemhistory?league=$league&id=" . $GLOBALS["exaltId"]);
 }
 
 function grouptocategory($group) {
@@ -45,9 +40,7 @@ foreach (array("currency", "card", "map") as $category) {
     $prices[$category] = buildPriceLookup(fetchPrices($league, $category));
 }
 
-$exaltHistory = fetchItemHistory($league, $exaltId);
-$latestExaltEntry = end($exaltHistory);
-$exaltPrice = $latestExaltEntry->mean;
+$exaltPrice = $prices["currency"]["Exalted Orb"];
 
 $combinedPrice = 0.0;
 
@@ -56,14 +49,14 @@ foreach ($currencyGroups as $currencyGroup => $currencies) {
     echo "<h4>{$currencyGroup}:</h4><ul>";
     foreach ($currencies as $currencyName => $currencyCount) {
         $price = $prices[grouptocategory($currencyGroup)][$currencyName];
-        $combinedPrice += $price;
-        $formattedPrice = number_format($price,1);
+        $combinedPrice += $price * $currencyCount;
+        $formattedPrice = number_format($price, 1);
         echo "<li>{$currencyName}: {$currencyCount} - {$formattedPrice}c</li>";
     }
     echo "</ul>";
 }
-$formattedCombinedPriceInChaos = number_format($combinedPrice,1);
-$formattedCombinedPriceInExalts = number_format($combinedPrice / $exaltPrice,1);
+$formattedCombinedPriceInChaos = number_format($combinedPrice, 1);
+$formattedCombinedPriceInExalts = number_format($combinedPrice / $exaltPrice, 1);
 
 echo "<h2>{$account} has a networth of: {$formattedCombinedPriceInChaos}c or ${formattedCombinedPriceInExalts}ex</h2>";
 ?>
