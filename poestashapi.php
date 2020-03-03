@@ -50,7 +50,7 @@ foreach ($currencyGroups as $currencyGroup => $currencies) {
         $price = $prices[grouptocategory($currencyGroup)][$currencyName];
         $combinedPrice += $price;
         $formattedPrice = number_format($price,1);
-        echo "<li>{$currencyName}: {$currencyCount} - {$price}c</li>";
+        echo "<li>{$currencyName}: {$currencyCount} - {$formattedPrice}c</li>";
     }
     echo "</ul>";
 }
