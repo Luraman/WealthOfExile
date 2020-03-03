@@ -2,6 +2,8 @@
 require "datacleanup.php";
 
 $url = "https://api.poe.watch/listings";
+$league = "Metamorph";
+$account = filter_var($_GET["account"], FILTER_SANITIZE_STRING);
 
 function fetchitems($league, $account) {
     $client = curl_init($GLOBALS["url"] . "?league=$league&account=$account");
@@ -12,14 +14,13 @@ function fetchitems($league, $account) {
     return $result;
 }
 
-$result = fetchitems("Metamorph", "Luraman");
+$result = fetchitems($league, $account);
 
 $currencyGroups = countCurrencies($result);
 
 echo "<h2>Results:</h2><br>";
-echo json_encode($result);
 foreach ($currencyGroups as $currencyGroup => $currencies) {
-    echo "<h4>{$currencyGroup}s</h4>:<br><ul>";
+    echo "<h4>{$currencyGroup}:</h4><ul>";
     foreach ($currencies as $currencyName => $currencyCount) {
         echo "<li>{$currencyName}: {$currencyCount}</li>";
     }

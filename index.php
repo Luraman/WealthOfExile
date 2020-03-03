@@ -6,11 +6,12 @@
 
     <script>
     function stashsearch() {
+        $accountName = document.getElementById("accountNameInput").nodeValue;
         document.getElementById("searchButton").setAttribute("disabled", true);
         document.getElementById("stashtabdata").innerHTML = "Searching...";
         var xmlhttp = new XMLHttpRequest();
             xmlhttp.onreadystatechange = searchcallback
-            xmlhttp.open("GET", "poestashapi.php", true);
+            xmlhttp.open("GET", `poestashapi.php?account=${encodeURIComponent($accountName)}`, true);
             xmlhttp.send();
     }
 
@@ -31,11 +32,12 @@
     <h2>Notice: Expect bugs</h2>
 </div>
 <div id="instructions">
-    <p>This site will look up the wealth of a given exiles currency tab.<br>
-    The first iteration of this site will simply yield the first currency tab it can find.<br>
-    Use the button below to find a currency tab.</p>
+    <p>This site will aggregate the wealth of a given exile.<br>
+    The current iteration of this site shows the currencies of an account in Metamorph league.<br>
+    Use the form below to find an account.</p>
 </div>
 <form>
+  <input type="text" value="Account Name" id="accountNameInput" name="accountNameInput">
   <input type="button" value="Search" id="searchButton" name="searchButton" onclick=stashsearch()>
 </form> 
 <div id="stashtab">
