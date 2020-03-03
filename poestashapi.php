@@ -37,7 +37,7 @@ $account = filter_var($_GET["account"], FILTER_SANITIZE_STRING);
 $currencyGroups = countCurrencies(fetchitems($league, $account));
 
 $prices = array();
-foreach (array("currency", "cards", "maps") as $category) {
+foreach (array("currency", "card", "map") as $category) {
     $prices[$category] = buildPriceLookup(fetchprices($league, $category));
 }
 
