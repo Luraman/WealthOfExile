@@ -41,15 +41,17 @@ foreach (array("currency", "card", "map") as $category) {
     $prices[$category] = buildPriceLookup(fetchprices($league, $category));
 }
 
-
+$combinedPrice = 0.0;
 
 echo "<h2>Results for {$account}:</h2>";
 foreach ($currencyGroups as $currencyGroup => $currencies) {
     echo "<h4>{$currencyGroup}:</h4><ul>";
     foreach ($currencies as $currencyName => $currencyCount) {
         $price = $prices[grouptocategory($currencyGroup)][$currencyName];
+        $combinedPrice += $price;
         echo "<li>{$currencyName}: {$currencyCount} - {$price}c</li>";
     }
     echo "</ul>";
 }
+echo "<h2>{$account} has a networth of: {$combinedPrice}c</h2>"
 ?>
