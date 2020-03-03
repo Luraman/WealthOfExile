@@ -11,7 +11,7 @@
         document.getElementById("stashtabdata").innerHTML = "Searching...";
         var xmlhttp = new XMLHttpRequest();
             xmlhttp.onreadystatechange = searchcallback
-            xmlhttp.open("GET", `poestashapi.php?account=${encodeURIComponent($accountName)}`, true);
+            xmlhttp.open("GET", `poestashapi.php?account=Luraman`, true);
             xmlhttp.send();
     }
 
