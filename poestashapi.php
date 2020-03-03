@@ -49,9 +49,11 @@ foreach ($currencyGroups as $currencyGroup => $currencies) {
     foreach ($currencies as $currencyName => $currencyCount) {
         $price = $prices[grouptocategory($currencyGroup)][$currencyName];
         $combinedPrice += $price;
-        echo "<li>{$currencyName}: {$currencyCount} - {number_format($price,1)}c</li>";
+        $formattedPrice = number_format($price,1);
+        echo "<li>{$currencyName}: {$currencyCount} - {$price}c</li>";
     }
     echo "</ul>";
 }
-echo "<h2>{$account} has a networth of: {number_format($combinedPrice,1)}c</h2>"
+$formattedCombinedPrice = number_format($combinedPrice,1);
+echo "<h2>{$account} has a networth of: {$formattedCombinedPrice}c</h2>"
 ?>
