@@ -6,12 +6,12 @@
 
     <script>
     function stashsearch() {
-        $accountName = document.getElementById("accountNameInput").nodeValue;
+        $accountName = encodeURIComponent(document.getElementById("accountNameInput").value);
         document.getElementById("searchButton").setAttribute("disabled", true);
         document.getElementById("stashtabdata").innerHTML = "Searching...";
         var xmlhttp = new XMLHttpRequest();
             xmlhttp.onreadystatechange = searchcallback
-            xmlhttp.open("GET", `poestashapi.php?account=Luraman`, true);
+            xmlhttp.open("GET", `poestashapi.php?account=${$accountName}`, true);
             xmlhttp.send();
     }
 
