@@ -1,12 +1,21 @@
 <?php
 require "datacleanup.php";
 
-$url = "https://api.poe.watch/listings";
+$url = "https://api.poe.watch";
 $league = "Metamorph";
 $account = filter_var($_GET["account"], FILTER_SANITIZE_STRING);
 
 function fetchitems($league, $account) {
-    $client = curl_init($GLOBALS["url"] . "?league=$league&account=$account");
+    $client = curl_init($GLOBALS["url"] . "/listings?league=$league&account=$account");
+    curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
+
+    $response = curl_exec($client);
+    $result = json_decode($response);
+    return $result;
+}
+
+function fetchprices($league, $category) {
+    $client = curl_init($GLOBALS["url"] . "/get?league=$league&category=$category");
     curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
 
     $response = curl_exec($client);

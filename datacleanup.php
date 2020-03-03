@@ -15,8 +15,6 @@ function countCurrencies($items) {
 function currencyFilter($item) {
     return $item->category == "card" ||
            $item->category == "currency" ||
-          ($item->category == "map"   && ($item->group == "fragment" || $item->group == "scarab")) ||
-           $item->catagory == "prophecy" ||
-          ($item->catagory == "beast" &&  $item->group == "beast");
+          ($item->category == "map"   && ($item->group == "fragment" || $item->group == "scarab"));
 }
 ?>
