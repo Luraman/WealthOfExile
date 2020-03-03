@@ -2,7 +2,7 @@
 function countCurrencies($items) {
     return array_reduce($items
                       , function($result, $item) {
-                            if ($item->category == "currency") {
+                            if (currencyFilter($item)) {
                                 if (!isset($result[$item->group])) {
                                     $result[$item->group] = array();
                                 }
@@ -10,5 +10,13 @@ function countCurrencies($items) {
                             }
                             return $result;
                      }, array());
+}
+
+function currencyFilter($item) {
+    return $item->category == "card" ||
+           $item->category == "currency" ||
+          ($item->category == "map"   && ($item->group == "fragment" || $item->group == "scarab")) ||
+           $item->catagory == "prophecy" ||
+          ($item->catagory == "beast" &&  $item->group == "beast");
 }
 ?>
