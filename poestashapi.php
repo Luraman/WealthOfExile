@@ -3,7 +3,6 @@ require "datacleanup.php";
 
 $url = "https://api.poe.watch";
 $league = "Metamorph";
-$account = filter_var($_GET["account"], FILTER_SANITIZE_STRING);
 
 function fetchitems($league, $account) {
     $client = curl_init($GLOBALS["url"] . "/listings?league=$league&account=$account");
@@ -23,15 +22,33 @@ function fetchprices($league, $category) {
     return $result;
 }
 
-$result = fetchitems($league, $account);
+function grouptocategory($group) {
+    if ($group == "card") {
+        return "card";
+    } elseif ($group == "fragment" || $group == "scarab") {
+        return "map";
+    } else {
+        return "currency";
+    }
+}
 
-$currencyGroups = countCurrencies($result);
+$account = filter_var($_GET["account"], FILTER_SANITIZE_STRING);
 
-echo "<h2>Results for {$account}:</h2><br>";
+$currencyGroups = countCurrencies(fetchitems($league, $account));
+
+$prices = array();
+foreach (array("currency", "cards", "maps") as $category) {
+    $prices[$category] = buildPriceLookup(fetchprices($league, $category));
+}
+
+
+
+echo "<h2>Results for {$account}:</h2>";
 foreach ($currencyGroups as $currencyGroup => $currencies) {
     echo "<h4>{$currencyGroup}:</h4><ul>";
     foreach ($currencies as $currencyName => $currencyCount) {
-        echo "<li>{$currencyName}: {$currencyCount}</li>";
+        $price = $prices[grouptocategory($group)][$currencyName];
+        echo "<li>{$currencyName}: {$currencyCount} - {$price}c</li>";
     }
     echo "</ul>";
 }

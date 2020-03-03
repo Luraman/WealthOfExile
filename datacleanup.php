@@ -17,4 +17,14 @@ function currencyFilter($item) {
            $item->category == "currency" ||
           ($item->category == "map"   && ($item->group == "fragment" || $item->group == "scarab"));
 }
+
+function buildPriceLookup($items) {
+    return array_reduce($items
+                      , function($result, $item) {
+                            if (currencyFilter($item)) {
+                                $result[$item->name] = $item->mean;
+                            }
+                            return $result;
+                     }, array());
+}
 ?>
