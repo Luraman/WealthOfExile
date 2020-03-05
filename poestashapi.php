@@ -36,7 +36,7 @@ class AccountWealth {
     public $combinedPrice;
     public $combinedPriceExalts;
 
-    public function __construct($accountName, &$prices) {
+    public function __construct($accountName, $prices) {
         $this->combinedPrice = 0;
         $this->currencyGroups = countCurrencies(fetchItems($GLOBALS["league"], $accountName));
         foreach ($this->currencyGroups as $currencyGroup => $currencies) {
