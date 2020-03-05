@@ -59,7 +59,7 @@ foreach (array("currency", "card", "map") as $category) {
 $wealth = new AccountWealth($account, $prices);
 
 $formattedCombinedPriceInChaos = number_format($wealth->combinedPrice, 1);
-$formattedCombinedPriceInExalts = number_format($wealth->combinedPrice / $prices["currency"]["Exalted Orb"], 1);
+$formattedCombinedPriceInExalts = number_format($wealth->combinedPriceExalts, 1);
 
 echo "<h2>{$account} has a networth of: {$formattedCombinedPriceInChaos}c or ${formattedCombinedPriceInExalts}ex</h2>";
 
