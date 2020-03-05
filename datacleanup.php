@@ -19,12 +19,12 @@ function currencyFilter($item) {
 }
 
 function buildPriceLookup($items) {
-    $result = array_reduce($items
-                         , function($result, $item) {
+    return array_reduce($items
+                      , function($result, $item) {
                             if (currencyFilter($item)) {
                                 $result[$item->name] = $item->mean;
                             }
                             return $result;
-                        }, array());
+                     }, array());
 }
 ?>
