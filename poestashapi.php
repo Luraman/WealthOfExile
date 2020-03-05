@@ -31,32 +31,48 @@ function grouptocategory($group) {
     }
 }
 
-$account = filter_var($_GET["account"], FILTER_SANITIZE_STRING);
+class AccountWealth {
+    public $currencyGroups;
+    public $combinedPrice;
+    public $combinedPriceExalts;
 
-$currencyGroups = countCurrencies(fetchItems($league, $account));
+    public function __construct($accountName, &$prices) {
+        $this->combinedPrice = 0;
+        $this->currencyGroups = countCurrencies(fetchItems($GLOBALS["league"], $accountName));
+        foreach ($this->currencyGroups as $currencyGroup => $currencies) {
+            foreach ($currencies as $currencyName => $currencyCount) {
+                $price = $prices[grouptocategory($currencyGroup)][$currencyName];
+                $combinedPrice += $price * $currencyCount;
+            }
+        }
+        $this->combinedPriceExalts = $combinedPrice / $prices["currency"]["Exalted Orb"];
+    }
+}
+
+$account = filter_var($_GET["account"], FILTER_SANITIZE_STRING);
 
 $prices = array();
 foreach (array("currency", "card", "map") as $category) {
     $prices[$category] = buildPriceLookup(fetchPrices($league, $category));
 }
 
-$exaltPrice = $prices["currency"]["Exalted Orb"];
-
 $combinedPrice = 0.0;
 
+$wealth = new AccountWealth($account, $prices);
+
+$formattedCombinedPriceInChaos = number_format($wealth->combinedPrice, 1);
+$formattedCombinedPriceInExalts = number_format($wealth->combinedPrice / $prices["currency"]["Exalted Orb"], 1);
+
+echo "<h2>{$account} has a networth of: {$formattedCombinedPriceInChaos}c or ${formattedCombinedPriceInExalts}ex</h2>";
+
 echo "<h2>Results for {$account}:</h2>";
-foreach ($currencyGroups as $currencyGroup => $currencies) {
+foreach ($wealth->currencyGroups as $currencyGroup => $currencies) {
     echo "<h4>{$currencyGroup}:</h4><ul>";
     foreach ($currencies as $currencyName => $currencyCount) {
         $price = $prices[grouptocategory($currencyGroup)][$currencyName];
-        $combinedPrice += $price * $currencyCount;
         $formattedPrice = number_format($price, 1);
         echo "<li>{$currencyName}: {$currencyCount} - {$formattedPrice}c</li>";
     }
     echo "</ul>";
 }
-$formattedCombinedPriceInChaos = number_format($combinedPrice, 1);
-$formattedCombinedPriceInExalts = number_format($combinedPrice / $exaltPrice, 1);
-
-echo "<h2>{$account} has a networth of: {$formattedCombinedPriceInChaos}c or ${formattedCombinedPriceInExalts}ex</h2>";
 ?>
