@@ -42,10 +42,10 @@ class AccountWealth {
         foreach ($this->currencyGroups as $currencyGroup => $currencies) {
             foreach ($currencies as $currencyName => $currencyCount) {
                 $price = $prices[grouptocategory($currencyGroup)][$currencyName];
-                $combinedPrice += $price * $currencyCount;
+                $this->combinedPrice += $price * $currencyCount;
             }
         }
-        $this->combinedPriceExalts = $combinedPrice / $prices["currency"]["Exalted Orb"];
+        $this->combinedPriceExalts = $this->combinedPrice / $prices["currency"]["Exalted Orb"];
     }
 }
 
@@ -55,8 +55,6 @@ $prices = array();
 foreach (array("currency", "card", "map") as $category) {
     $prices[$category] = buildPriceLookup(fetchPrices($league, $category));
 }
-
-$combinedPrice = 0.0;
 
 $wealth = new AccountWealth($account, $prices);
 
