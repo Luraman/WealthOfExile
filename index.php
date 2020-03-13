@@ -34,7 +34,18 @@
         document.getElementById("searchButton").removeAttribute("disabled");
     }
 
-    function getleagues() {
+    function getleagueslookup() {
+        httprequest(`leagueslookup.php`, execleagueslookup);
+    }
+
+    function execleagueslookup(success, response) {
+        var message = "";
+        if (success) {
+            message = response;
+        } else {
+            message = `<option value="">No current leagues</option>`;
+        }
+        document.getElementById("leaguesDropdown").innerHTML = message;
     }
     </script>
 </head>
@@ -49,7 +60,7 @@
 </div>
 <form>
   <input type="text" value="Account Name" id="accountNameInput" name="accountNameInput">
-  <select id="leaguesDropdown" beforeprint=getleagues()>
+  <select id="leaguesDropdown" beforeprint=getleagueslookup()>
       <option value="Loading">Loading...</option>
   </select>
   <input type="button" value="Search" id="searchButton" name="searchButton" onclick=getaccountlookup()>
