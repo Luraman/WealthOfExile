@@ -16,9 +16,9 @@
     function httpcallback(callbackExec) {
         alert("httpcallback");
         if (this.readyState == 4 && this.status == 200) {
-            callbackExec(false, this.responseText);
+            callbackExec(false, this);
         } else {
-            callbackExec(true, this.responseText);
+            callbackExec(true, this);
         }
     }
 
@@ -31,10 +31,10 @@
     }
 
     function execaccountlookup(success, response) {
-        var message = ""
+        var message = "";
         if (success) {
             alert("execaccountlookup");
-            message = response;
+            message = response.responseText;
         } else {
             message = `<p>Connection failed - Status Code: ${this.status.toString()} </p>`;
         }
