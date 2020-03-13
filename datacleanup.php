@@ -29,12 +29,13 @@ function buildPriceLookup($items) {
 }
 
 function listActiveLeagues($leagues) {
-    return array_reduce($leagues
+    $result = array_reduce($leagues
                       , function($result, $league) {
                           if ($league->active) {
                               $result[] = $league->name;
                           }
                           return $result;
                      }, array());
+    return array_reverse($result);
 }
 ?>
