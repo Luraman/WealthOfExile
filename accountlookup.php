@@ -2,6 +2,7 @@
 require "poestashapi.php";
 
 $account = filter_var($_POST["accountName"], FILTER_SANITIZE_STRING);
+$league = filter_var($_POST["league"], FILTER_SANITIZE_STRING);
 
 $prices = array();
 foreach (array("currency", "card", "map") as $category) {

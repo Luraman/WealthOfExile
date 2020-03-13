@@ -2,7 +2,6 @@
 require "datacleanup.php";
 
 $url = "https://api.poe.watch";
-$league = "Metamorph";
 
 function fetch($url) {
     $client = curl_init($url);
