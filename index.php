@@ -5,8 +5,6 @@
     <title>The biggest of stonks</title>
 
     <script>
-    window.addEventListener("onload", getleagueslookup);
-    
     function httprequest(url, callbackExec) {
         var xmlhttp = new XMLHttpRequest();
             xmlhttp.onreadystatechange = function() {
@@ -53,7 +51,7 @@
     }
     </script>
 </head>
-<body>
+<body onload="getleagueslookup()">
 <div id="alert">
     <h2>Notice: Expect bugs</h2>
 </div>
@@ -64,7 +62,7 @@
 </div>
 <form>
   <input type="text" value="Account Name" id="accountNameInput" name="accountNameInput">
-  <select id="leaguesDropdown" onload="getleagueslookup()">
+  <select id="leaguesDropdown">
       <option value="Loading">Loading...</option>
   </select>
   <input type="button" value="Search" id="searchButton" name="searchButton" onclick=getaccountlookup()>
