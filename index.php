@@ -62,7 +62,7 @@
 </div>
 <form>
   <input type="text" value="Account Name" id="accountNameInput" name="accountNameInput">
-  <select id="leaguesDropdown" onload=getleagueslookup()>
+  <select id="leaguesDropdown" onload="getleagueslookup()">
       <option value="Loading">Loading...</option>
   </select>
   <input type="button" value="Search" id="searchButton" name="searchButton" onclick=getaccountlookup()>
