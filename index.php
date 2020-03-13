@@ -5,6 +5,8 @@
     <title>The biggest of stonks</title>
 
     <script>
+    document.addEventListener("onload", getleagueslookup);
+    
     function httprequest(url, callbackExec) {
         var xmlhttp = new XMLHttpRequest();
             xmlhttp.onreadystatechange = function() {
