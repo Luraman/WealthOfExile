@@ -5,6 +5,14 @@
     <title>The biggest of stonks</title>
 
     <script>
+    function main() {
+        document.getElementById("lookupForm").onsubmit = function(event) {
+            getaccountlookup();
+            return false;
+        }
+        getleagueslookup();
+    }
+    
     function httprequest(url, callbackExec) {
         var xmlhttp = new XMLHttpRequest();
             xmlhttp.onreadystatechange = function() {
@@ -49,7 +57,7 @@
     }
     </script>
 </head>
-<body onload="getleagueslookup()">
+<body onload="main()">
 <div id="alert">
     <h2>Notice: Expect bugs</h2>
 </div>
@@ -58,12 +66,12 @@
     The current iteration of this site shows the currencies of an account in Metamorph league.<br>
     Use the form below to find an account.</p>
 </div>
-<form>
+<form id="lookupForm">
   <input type="text" value="Account Name" id="accountNameInput" name="accountNameInput">
   <select id="leaguesDropdown">
       <option value="Loading">Loading...</option>
   </select>
-  <input type="submit" value="Search" id="searchButton" name="searchButton" onsubmit="getaccountlookup(); return false;">
+  <input type="submit" value="Search" id="searchButton" name="searchButton">
 </form>
 <div id="stashtab">
     <span id=stashtabdata><p>Click the button to start</p></span>
