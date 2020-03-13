@@ -6,10 +6,14 @@
 
     <script>
     function main() {
-        document.getElementById("lookupForm").onsubmit = function(event) {
-            getaccountlookup();
-            return false;
-        }
+        var form = document.getElementById("lookupForm");
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            new FormData(form);
+        });
+        form.addEventListener('formdata', (e) => {
+            getaccountlookup(e.formData);
+        });
         getleagueslookup();
     }
     
@@ -28,12 +32,7 @@
             }
     }
 
-    function getaccountlookup() {
-        var formData = new FormData(document.getElementById("lookupForm"));
-        for (var key of formData.keys) {
-            alert("".concat(key, ": ", formData[key]));
-            alert(key);
-        }
+    function getaccountlookup(formData) {
         document.getElementById("searchButton").setAttribute("disabled", true);
         document.getElementById("stashtabdata").innerHTML = "<p>Searching...</p>";
         httprequest(`accountlookup.php`, execaccountlookup, formData);
