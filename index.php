@@ -33,7 +33,7 @@
     }
 
     function getaccountlookup(formData) {
-        for (key in Array.from(formData.keys())) {
+        for (key in Array.from(formData.values())) {
             alert(key);
         }
         document.getElementById("searchButton").setAttribute("disabled", true);
