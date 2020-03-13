@@ -1,6 +1,8 @@
 <?php
-require "credentials.php";
+//require "credentials.php";
 require "poestashapi.php";
+$user = "fake";
+$pass = "fake";
 
 $conn = new mysqli("localhost", $user, $pass, "woedb");
 
