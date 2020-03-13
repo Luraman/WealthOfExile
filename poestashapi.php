@@ -13,6 +13,10 @@ function fetch($url) {
     return $result;
 }
 
+function fetchLeagues() {
+    return fetch($GLOBALS["url"] . "/leagues");
+}
+
 function fetchItems($league, $account) {
     return fetch($GLOBALS["url"] . "/listings?league=$league&account=$account");
 }
@@ -36,7 +40,7 @@ class AccountWealth {
     public $combinedPrice;
     public $combinedPriceExalts;
 
-    public function __construct($accountName, $prices) {
+    public function __construct($accountName, &$prices) {
         $this->combinedPrice = 0;
         $this->currencyGroups = countCurrencies(fetchItems($GLOBALS["league"], $accountName));
         foreach ($this->currencyGroups as $currencyGroup => $currencies) {
@@ -47,30 +51,5 @@ class AccountWealth {
         }
         $this->combinedPriceExalts = $this->combinedPrice / $prices["currency"]["Exalted Orb"];
     }
-}
-
-$account = filter_var($_GET["account"], FILTER_SANITIZE_STRING);
-
-$prices = array();
-foreach (array("currency", "card", "map") as $category) {
-    $prices[$category] = buildPriceLookup(fetchPrices($league, $category));
-}
-
-$wealth = new AccountWealth($account, $prices);
-
-$formattedCombinedPriceInChaos = number_format($wealth->combinedPrice, 1);
-$formattedCombinedPriceInExalts = number_format($wealth->combinedPriceExalts, 1);
-
-echo "<h2>{$account} has a networth of: {$formattedCombinedPriceInChaos}c or ${formattedCombinedPriceInExalts}ex</h2>";
-
-echo "<h2>Results for {$account}:</h2>";
-foreach ($wealth->currencyGroups as $currencyGroup => $currencies) {
-    echo "<h4>{$currencyGroup}:</h4><ul>";
-    foreach ($currencies as $currencyName => $currencyCount) {
-        $price = $prices[grouptocategory($currencyGroup)][$currencyName];
-        $formattedPrice = number_format($price, 1);
-        echo "<li>{$currencyName}: {$currencyCount} - {$formattedPrice}c</li>";
-    }
-    echo "</ul>";
 }
 ?>

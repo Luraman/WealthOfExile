@@ -11,7 +11,7 @@
         document.getElementById("stashtabdata").innerHTML = "Searching...";
         var xmlhttp = new XMLHttpRequest();
             xmlhttp.onreadystatechange = searchcallback
-            xmlhttp.open("GET", `poestashapi.php?account=${$accountName}`, true);
+            xmlhttp.open("GET", `accountlookup.php?account=${$accountName}`, true);
             xmlhttp.send();
     }
 
@@ -39,7 +39,7 @@
 <form>
   <input type="text" value="Account Name" id="accountNameInput" name="accountNameInput">
   <input type="button" value="Search" id="searchButton" name="searchButton" onclick=stashsearch()>
-</form> 
+</form>
 <div id="stashtab">
     <span id=stashtabdata><p>Click the button to start</p></span>
 </div>
