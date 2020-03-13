@@ -6,24 +6,19 @@
 
     <script>
     function httprequest(url, callbackExec) {
-        alert("httprequest");
         var xmlhttp = new XMLHttpRequest();
-            xmlhttp.onreadystatechange = function() {httpcallback(callbackExec);};
+            xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    callbackExec(false, this.responseText);
+                } else {
+                    callbackExec(true, this.responseText);
+                }
+            };
             xmlhttp.open("GET", url, true);
             xmlhttp.send();
     }
 
-    function httpcallback(callbackExec) {
-        alert("httpcallback");
-        if (this.readyState == 4 && this.status == 200) {
-            callbackExec(false, this);
-        } else {
-            callbackExec(true, this);
-        }
-    }
-
     function getaccountlookup() {
-        alert("getaccountlookup");
         var accountName = encodeURIComponent(document.getElementById("accountNameInput").value);
         document.getElementById("searchButton").setAttribute("disabled", true);
         document.getElementById("stashtabdata").innerHTML = "Searching...";
@@ -33,10 +28,9 @@
     function execaccountlookup(success, response) {
         var message = "";
         if (success) {
-            alert("execaccountlookup");
-            message = response.responseText;
+            message = response;
         } else {
-            message = `<p>Connection failed - Status Code: ${this.status.toString()} </p>`;
+            message = `<p>Connection failed</p>`;
         }
         document.getElementById("stashtabdata").innerHTML = message;
         document.getElementById("searchButton").removeAttribute("disabled");
