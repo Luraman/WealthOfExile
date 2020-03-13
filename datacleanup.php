@@ -27,4 +27,14 @@ function buildPriceLookup($items) {
                             return $result;
                      }, array());
 }
+
+function listActiveLeagues($leagues) {
+    return array_reduce($leagues
+                      , function($result, $league) {
+                          if ($league->active) {
+                              $result[] = $league->name;
+                          }
+                          return $result;
+                     }, array());
+}
 ?>

@@ -38,6 +38,10 @@
 </div>
 <form>
   <input type="text" value="Account Name" id="accountNameInput" name="accountNameInput">
+  <select id="leagues">
+      <option value="standard">Standard</option>
+      <option value="hardcore">Hardcore</option>
+  </select>
   <input type="button" value="Search" id="searchButton" name="searchButton" onclick=stashsearch()>
 </form>
 <div id="stashtab">
