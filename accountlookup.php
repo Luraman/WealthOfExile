@@ -14,9 +14,9 @@ $wealth = new AccountWealth($account, $prices);
 $formattedCombinedPriceInChaos = number_format($wealth->combinedPrice, 1);
 $formattedCombinedPriceInExalts = number_format($wealth->combinedPriceExalts, 1);
 
-echo "<h2>{$account} has a networth of: {$formattedCombinedPriceInChaos}c or ${formattedCombinedPriceInExalts}ex</h2>";
+echo "<h2>{$league} - {$account} has a networth of: {$formattedCombinedPriceInChaos}c or ${formattedCombinedPriceInExalts}ex</h2>";
 
-echo "<h2>Results for {$account}:</h2>";
+echo "<h2>Listed items from {$account}:</h2>";
 foreach ($wealth->currencyGroups as $currencyGroup => $currencies) {
     echo "<h4>{$currencyGroup}:</h4><ul>";
     foreach ($currencies as $currencyName => $currencyCount) {
