@@ -63,7 +63,7 @@
   <select id="leaguesDropdown">
       <option value="Loading">Loading...</option>
   </select>
-  <input type="submit" value="Search" id="searchButton" name="searchButton" onsubmit="return getaccountlookup();">
+  <input type="submit" value="Search" id="searchButton" name="searchButton" onsubmit="getaccountlookup(); return false;">
 </form>
 <div id="stashtab">
     <span id=stashtabdata><p>Click the button to start</p></span>
