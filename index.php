@@ -20,7 +20,7 @@
                     callbackExec(this.status == 200, this.responseText);
                 }
             };
-            xmlhttp.open("GET", url, true);
+            xmlhttp.open("POST", url, true);
             if (formdata) {
                 xmlhttp.send(formdata);
             } else {
