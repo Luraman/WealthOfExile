@@ -6,6 +6,7 @@
 
     <script>
     function httprequest(url, callbackExec) {
+        print("httprequest");
         var xmlhttp = new XMLHttpRequest();
             xmlhttp.onreadystatechange = function() {httpcallback(callbackExec);};
             xmlhttp.open("GET", url, true);
@@ -13,6 +14,7 @@
     }
 
     function httpcallback(callbackExec) {
+        print("httpcallback");
         if (this.readyState == 4 && this.status == 200) {
             callbackExec(false, this.responseText);
         } else {
@@ -21,6 +23,7 @@
     }
 
     function getaccountlookup() {
+        print("getaccountlookup");
         $accountName = encodeURIComponent(document.getElementById("accountNameInput").value);
         document.getElementById("searchButton").setAttribute("disabled", true);
         document.getElementById("stashtabdata").innerHTML = "Searching...";
@@ -28,6 +31,7 @@
     }
 
     function execaccountlookup(success, response) {
+        print("execaccountlookup");
         var message = ""
         if (success) {
             message = response;
