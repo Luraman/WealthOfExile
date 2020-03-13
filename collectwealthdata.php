@@ -2,7 +2,7 @@
 require "credentials.php";
 require "poestashapi.php";
 
-$conn = new mysqli("woedb", $user, $pass);
+$conn = new mysqli("localhost", $user, $pass, "woedb");
 
 if ($conn->connect_error) {
     echo "Connection failed: {$conn->connect_error}</p>";
