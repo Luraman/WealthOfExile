@@ -5,10 +5,11 @@ require "poestashapi.php";
 $conn = new mysqli("woedb", $user, $pass);
 
 if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+    echo "Connection failed: {$conn->connect_error}</p>";
+    die();
 }
 
-echo "Connected successfully";
+echo "<p>Connected successfully</p>";
 
 //$leagues = listActiveLeagues(fetchLeagues());
 ?>
