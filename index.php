@@ -31,7 +31,7 @@
     function getaccountlookup() {
         var formData = new FormData(document.getElementById("lookupForm"));
         for (var value of formData.keys) {
-            alert("".concat(key, ": ", formData[key]));
+            alert(key);
         }
         document.getElementById("searchButton").setAttribute("disabled", true);
         document.getElementById("stashtabdata").innerHTML = "<p>Searching...</p>";
