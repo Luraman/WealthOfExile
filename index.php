@@ -24,7 +24,7 @@
         $accountName = encodeURIComponent(document.getElementById("accountNameInput").value);
         document.getElementById("searchButton").setAttribute("disabled", true);
         document.getElementById("stashtabdata").innerHTML = "Searching...";
-        httpcallback(`accountlookup.php?account=${$accountName}`, execaccountlookup);
+        httprequest(`accountlookup.php?account=${$accountName}`, execaccountlookup);
     }
 
     function execaccountlookup(success, response) {
