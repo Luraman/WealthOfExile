@@ -5,25 +5,40 @@
     <title>The biggest of stonks</title>
 
     <script>
-    function stashsearch() {
-        $accountName = encodeURIComponent(document.getElementById("accountNameInput").value);
-        document.getElementById("searchButton").setAttribute("disabled", true);
-        document.getElementById("stashtabdata").innerHTML = "Searching...";
+    function httprequest(url, callbackExec) {
         var xmlhttp = new XMLHttpRequest();
-            xmlhttp.onreadystatechange = searchcallback
-            xmlhttp.open("GET", `accountlookup.php?account=${$accountName}`, true);
+            xmlhttp.onreadystatechange = function() {httpcallback(callbackExec);};
+            xmlhttp.open("GET", url, true);
             xmlhttp.send();
     }
 
-    function searchcallback() {
-        var message = ""
+    function httpcallback(callbackExec) {
         if (this.readyState == 4 && this.status == 200) {
-            message = this.responseText;
+            callbackExec(false, this.responseText);
+        } else {
+            callbackExec(true, this.responseText);
+        }
+    }
+
+    function getaccountlookup() {
+        $accountName = encodeURIComponent(document.getElementById("accountNameInput").value);
+        document.getElementById("searchButton").setAttribute("disabled", true);
+        document.getElementById("stashtabdata").innerHTML = "Searching...";
+        httpcallback(`accountlookup.php?account=${$accountName}`, execaccountlookup);
+    }
+
+    function execaccountlookup(success, response) {
+        var message = ""
+        if (success) {
+            message = response;
         } else {
             message = `<p>Connection failed - Status Code: ${this.status.toString()} </p>`;
         }
         document.getElementById("stashtabdata").innerHTML = message;
         document.getElementById("searchButton").removeAttribute("disabled");
+    }
+
+    function getleagues() {
     }
     </script>
 </head>
@@ -38,11 +53,10 @@
 </div>
 <form>
   <input type="text" value="Account Name" id="accountNameInput" name="accountNameInput">
-  <select id="leagues">
-      <option value="standard">Standard</option>
-      <option value="hardcore">Hardcore</option>
+  <select id="leaguesDropdown" beforeprint=getleagues()>
+      <option value="Loading">Loading...</option>
   </select>
-  <input type="button" value="Search" id="searchButton" name="searchButton" onclick=stashsearch()>
+  <input type="button" value="Search" id="searchButton" name="searchButton" onclick=getaccountlookup()>
 </form>
 <div id="stashtab">
     <span id=stashtabdata><p>Click the button to start</p></span>
