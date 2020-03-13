@@ -33,6 +33,9 @@
     }
 
     function getaccountlookup(formData) {
+        for (key in formData.keys) {
+            alert(key);
+        }
         document.getElementById("searchButton").setAttribute("disabled", true);
         document.getElementById("stashtabdata").innerHTML = "<p>Searching...</p>";
         httprequest(`accountlookup.php`, execaccountlookup, formData);
@@ -76,7 +79,7 @@
 </div>
 <form id="lookupForm">
   <input type="text" value="Account Name" id="accountName" name="accountName">
-  <select id="leaguesDropdown" form="lookupForm">
+  <select id="leaguesDropdown" name="league" form="lookupForm">
       <option value="Loading">Loading...</option>
   </select>
   <input type="submit" value="Search" id="searchButton" name="searchButton">
