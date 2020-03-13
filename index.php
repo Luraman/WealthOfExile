@@ -30,6 +30,9 @@
 
     function getaccountlookup() {
         var formData = new FormData(document.getElementById("lookupForm"));
+        for (var value of formData.values()) {
+            alert(value);
+        }
         document.getElementById("searchButton").setAttribute("disabled", true);
         document.getElementById("stashtabdata").innerHTML = "<p>Searching...</p>";
         httprequest(`accountlookup.php`, execaccountlookup, formData);
