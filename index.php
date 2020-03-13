@@ -75,7 +75,7 @@
     The current iteration of this site shows the currencies of an account in Metamorph league.<br>
     Use the form below to find an account.</p>
 </div>
-<form id="lookupForm" enctype="multipart/form-data" method="post">
+<form id="lookupForm">
   <input type="text" value="Account Name" id="accountName" name="accountName">
   <select id="leaguesDropdown" form="lookupForm">
       <option value="Loading">Loading...</option>
