@@ -1,7 +1,7 @@
 <?php
 require "poestashapi.php";
 
-$account = filter_var($_GET["account"], FILTER_SANITIZE_STRING);
+$account = filter_var($_GET["accountName"], FILTER_SANITIZE_STRING);
 
 $prices = array();
 foreach (array("currency", "card", "map") as $category) {

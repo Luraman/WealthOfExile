@@ -13,7 +13,7 @@
         getleagueslookup();
     }
     
-    function httprequest(url, callbackExec) {
+    function httprequest(url, callbackExec, formdata=null) {
         var xmlhttp = new XMLHttpRequest();
             xmlhttp.onreadystatechange = function() {
                 if (this.readyState == 4) {
@@ -21,14 +21,18 @@
                 }
             };
             xmlhttp.open("GET", url, true);
-            xmlhttp.send();
+            if (formdata) {
+                xmlhttp.send(formdata);
+            } else {
+                xmlhttp.send();
+            }
     }
 
     function getaccountlookup() {
-        var accountName = encodeURIComponent(document.getElementById("accountNameInput").value);
+        var formData = new FormData(document.getElementById("lookupForm"));
         document.getElementById("searchButton").setAttribute("disabled", true);
         document.getElementById("stashtabdata").innerHTML = "<p>Searching...</p>";
-        httprequest(`accountlookup.php?account=${accountName}`, execaccountlookup);
+        httprequest(`accountlookup.php`, execaccountlookup, formData);
     }
 
     function execaccountlookup(success, response) {
@@ -57,6 +61,7 @@
     }
     </script>
 </head>
+
 <body onload="main()">
 <div id="alert">
     <h2>Notice: Expect bugs</h2>
@@ -67,8 +72,8 @@
     Use the form below to find an account.</p>
 </div>
 <form id="lookupForm">
-  <input type="text" value="Account Name" id="accountNameInput" name="accountNameInput">
-  <select id="leaguesDropdown">
+  <input type="text" value="Account Name" id="accountName" name="accountName">
+  <select id="leaguesDropdown" form="lookupForm">
       <option value="Loading">Loading...</option>
   </select>
   <input type="submit" value="Search" id="searchButton" name="searchButton">
