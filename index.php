@@ -8,10 +8,8 @@
     function httprequest(url, callbackExec) {
         var xmlhttp = new XMLHttpRequest();
             xmlhttp.onreadystatechange = function() {
-                if (this.readyState == 4 && this.status == 200) {
-                    callbackExec(false, this.responseText);
-                } else {
-                    callbackExec(true, this.responseText);
+                if (this.readyState == 4) {
+                    callbackExec(this.status == 200, this.responseText);
                 }
             };
             xmlhttp.open("GET", url, true);
@@ -21,7 +19,7 @@
     function getaccountlookup() {
         var accountName = encodeURIComponent(document.getElementById("accountNameInput").value);
         document.getElementById("searchButton").setAttribute("disabled", true);
-        document.getElementById("stashtabdata").innerHTML = "Searching...";
+        document.getElementById("stashtabdata").innerHTML = "<p>Searching...</p>";
         httprequest(`accountlookup.php?account=${accountName}`, execaccountlookup);
     }
 
