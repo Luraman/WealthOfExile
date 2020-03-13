@@ -35,10 +35,12 @@
     }
 
     function getleagueslookup() {
+        alert("getleagueslookup");
         httprequest(`leagueslookup.php`, execleagueslookup);
     }
 
     function execleagueslookup(success, response) {
+        alert("execleagueslookup");
         var message = "";
         if (success) {
             message = response;
